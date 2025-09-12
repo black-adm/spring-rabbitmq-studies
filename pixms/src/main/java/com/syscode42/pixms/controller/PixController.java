@@ -22,7 +22,12 @@ public class PixController {
 
     @PostMapping
     public ResponseEntity<Void> makePix(@RequestBody PixRequestDto request) {
-        rabbitTemplate.convertAndSend(PIX_MADE_EXCHANGE, request.channel(), request);
+        rabbitTemplate.convertAndSend(
+                PIX_MADE_EXCHANGE,
+                request.channel().getValue(),
+                request
+        );
+
         return ResponseEntity.accepted().build();
     }
 }

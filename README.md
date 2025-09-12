@@ -34,14 +34,14 @@ O corpo da requisição deve ser enviado em JSON com os seguintes campos:
 
 ````json
 {
-  "channel": "pf",
+  "channel": "PF",
   "from": "Matheus Madureira",
   "to": "James Gosling",
   "value": 2334.96
 }
 ````
 
-* **channel**: Tipo de cliente (pf para pessoa física, pj para pessoa jurídica).
+* **channel**: Tipo de cliente (**PF** para pessoa física, **PJ** para pessoa jurídica).
 
 * **from**: Nome do remetente do PIX.
 
