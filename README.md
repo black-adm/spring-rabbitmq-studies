@@ -49,4 +49,13 @@ O corpo da requisição deve ser enviado em JSON com os seguintes campos:
 
 * **value**: Valor do PIX a ser enviado.
 
-Ao enviar a requisição com sucesso, a **API** cria uma nova **Exchange** no **RabbitMQ** chamada ``pix-efetuado``. Esta Exchange será usada para processar e distribuir os eventos de **PIX** na fila de mensagens.
+Ao enviar a requisição com sucesso, a **API** publica o evento em uma **Exchange** do **RabbitMQ** chamada ``pix-efetuado``. 
+
+Esta **Exchange** é responsável por processar e distribuir os eventos de **PIX** para as filas de mensagens configuradas.
+
+Atualmente, existe um microserviço chamado `auditms` que realiza o **binding** com a exchange `pix-efetuado`. Esse serviço direciona as mensagens para uma fila de auditoria e gera logs das transações processadas.
+Exemplo de log gerado a partir de uma transação **PIX**:
+
+``````text
+AUDIT - Message Received: GenericMessage [payload=PixRequestDto[channel=PF, from=Matheus Madureira, to=Tom Cruise, value=4771.52] 
+``````

@@ -14,6 +14,7 @@ public class RabbitMQConfig {
     public Jackson2JsonMessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
     @Bean
     public TopicExchange getPixMadeExchange() {
         return new TopicExchange(PIX_MADE_EXCHANGE);
