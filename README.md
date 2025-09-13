@@ -53,9 +53,20 @@ Ao enviar a requisição com sucesso, a **API** publica o evento em uma **Exchan
 
 Esta **Exchange** é responsável por processar e distribuir os eventos de **PIX** para as filas de mensagens configuradas.
 
-Atualmente, existe um microserviço chamado `auditms` que realiza o **binding** com a exchange `pix-efetuado`. Esse serviço direciona as mensagens para uma fila de auditoria e gera logs das transações processadas.
+Atualmente, existem mais 3 microserviços além do de envio de **PIX**: `auditms`, `pfms` e `pjms`.  
+São eles que realizam o **binding** com a *exchange* `pix-efetuado`.
+
+Cada microserviço direciona as mensagens para uma fila de acordo com sua responsabilidade:
+
+* O microserviço `pfms` recebe eventos de transações do tipo **PF – pessoa física** e gera logs.
+
+
+* O microserviço `pjms` processa apenas transações do tipo **PJ – pessoa jurídica**, também gerando logs.
+
+
+* O microserviço `auditms` atua como auditoria geral, monitorando todos os tipos de eventos e registrando os logs das transações processadas.
+
 Exemplo de log gerado a partir de uma transação **PIX**:
 
-``````text
-AUDIT - Message Received: GenericMessage [payload=PixRequestDto[channel=PF, from=Matheus Madureira, to=Tom Cruise, value=4771.52] 
-``````
+```text
+AUDIT - Message Received: GenericMessage [payload=PixRequestDto[channel=PF, from=Matheus Madureira, to=Tom Cruise, value=4771.52]]

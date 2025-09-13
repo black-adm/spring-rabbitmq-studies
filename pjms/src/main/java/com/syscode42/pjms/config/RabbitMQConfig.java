@@ -1,4 +1,4 @@
-package com.syscode42.auditms.config;
+package com.syscode42.pjms.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static  final String AUDIT_QUEUE = "audit-queue";
+    public static  final String PJ_QUEUE = "pj-queue";
+    public static  final String PJ_ROUTING_KEY = "pj";
     public static final String PIX_MADE_EXCHANGE = "pix-efetuado";
 
     @Bean
@@ -20,8 +21,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue auditQueue() {
-        return new Queue(AUDIT_QUEUE);
+    public Queue pjQueue() {
+        return new Queue(PJ_QUEUE);
     }
 
     @Bean
@@ -30,10 +31,10 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingQueueExchange(Queue auditQueue, TopicExchange pixMadeExchange) {
+    public Binding bindingQueueExchange(Queue pjQueue, TopicExchange pixMadeExchange) {
         return BindingBuilder
-                .bind(auditQueue)
+                .bind(pjQueue)
                 .to(pixMadeExchange)
-                .with("*");
+                .with(PJ_ROUTING_KEY);
     }
 }
